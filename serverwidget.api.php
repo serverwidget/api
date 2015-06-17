@@ -73,7 +73,7 @@ Class ServerWidgetAPI {
   private function request($url, $params = array()) {
     $params['api_id'] = $this->api_id;
     $params['api_key'] = $this->api_key;
-    $params['api_lang'] = $this->api_lang;
+    $params['lang'] = $this->api_lang;
 
     $url = $url . (is_array($params) && count($params) ? '?'.$this->params($params) : '');
 
@@ -83,7 +83,6 @@ Class ServerWidgetAPI {
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
       curl_setopt($ch, CURLOPT_HEADER, 0);
-      // curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.122 Safari/537.36 OPR/24.0.1558.64');
 
       $result = curl_exec($ch);
 
