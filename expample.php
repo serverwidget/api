@@ -4,7 +4,7 @@ include 'serverwidget.api.php';
 
 $address = (isset($_GET['address']) && strlen($_GET['address'])) ? trim($_GET['address']) : '217.106.106.117:27015';
 
-$sw_api = new ServerWidgetAPI('API_ID', 'API_KEY');
+$sw_api = new ServerWidgetAPI('10007', 'cPlBWPQ74NEF6Ujw3g4HviiPGvZ');
 $serverInfo = $sw_api->serverGet($address);
 
 if (isset($serverInfo['result'])) {
@@ -28,6 +28,10 @@ body, html {
   font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
   font-size: 12px;
   color: #555;
+}
+
+a {
+  color: #678EB5;
 }
 
 .fl_r {
@@ -101,8 +105,9 @@ div.empty_table {
   font-size: 14px;
 }
 
-div.empty_line {
-  height: 20px;
+div.footer {
+  padding: 10px 0;
+  text-align: center;
 }
 
 table tr th {
@@ -134,7 +139,7 @@ span.color-green {
 </head>
 <body>
   <div class="width">
-    <h2>Serverwidget API пример:</h2>
+    <h2>Serverwidget API <div class="fl_r">Скачать с <a href="https://github.com/serverwidget/api/archive/master.zip" rel="nofoloow" target="_blank">github.com</a></div></h2>
 
     <hr>
 <? if (isset($serverInfo['result'])): ?>
@@ -221,12 +226,14 @@ span.color-green {
 
     <table width="100%" cellpadding="5" cellspacing="0">
       <tr>
+        <th align="left">#</th>
         <th align="center">Изображение</th>
         <th align="left">Название</th>
         <th align="right">Процент</th>
       </tr>
 <? foreach ($maps['result']['data'] as $idx => $map): ?>
       <tr<? if ($idx%2 !== 0): ?> class="dark"<? endif; ?>>
+        <td align="left"><?=($idx + 1)?>.</td>
         <td align="center" width="20%"><img src="<?=(strlen($map['image']) ? $map['image'] : '//maps.serverwidget.com/noimage.png');?>" height="60" alt="<?=$map['name'];?>" title="<?=$map['name'];?>"></td>
         <td align="left" width="40%" style="padding-left: 5px;"><?=$map['name'];?></td>
         <td align="right" width="40%" style="padding-left: 5px;"><?=$map['value'];?>%</td>
@@ -237,7 +244,7 @@ span.color-green {
     <div class="empty_table"><?=$serverInfo['error']['error_msg'];?></div>
 <? endif; ?>
 
-    <div class="empty_line"></div>
+    <div class="footer">jtiq &copy; SERVERWIDGET, 2015</div>
   </div>
 </body>
 </html>
