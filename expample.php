@@ -31,7 +31,7 @@ body, html {
 }
 
 a {
-  color: #678EB5;
+  color: #45688E;
 }
 
 .fl_r {
@@ -58,13 +58,13 @@ a {
 h2 {
   margin: 0;
   padding: 15px 0 0 0;
-  color: #678EB5;
+  color: #45688E;
 }
 
 h3 {
   margin: 0;
   padding: 10px 0;
-  color: #678EB5;
+  color: #45688E;
 }
 
 hr {
@@ -106,13 +106,14 @@ div.empty_table {
 }
 
 div.footer {
-  padding: 10px 0;
+  padding: 10px 0 20px 0;
   text-align: center;
 }
 
 table tr th {
   line-height: 24px;
-  background: #eee;
+  background: #DEE5EB;
+  color: #45688E;
 }
 
 table tr td {
@@ -164,11 +165,186 @@ span.color-green {
         <b>Игроки:</b>
         <span><?=$serverInfo['result']['server']['players']['now'];?> / <?=$serverInfo['result']['server']['players']['max'];?></span>
       </div>
+      <div class="row">
+        <b>VAC античит:</b>
+        <span><?=($serverInfo['result']['server']['extra']['vac'] == 1 ? 'Да' : 'Нет');?></span>
+      </div>
+      <div class="row">
+        <b>ОС сервера:</b>
+        <span><?=($serverInfo['result']['server']['extra']['os'] == 'l' ? 'Linux' : ($serverInfo['result']['server']['extra']['os'] == 'w' ? 'Windows' : 'Mac'));?></span>
+      </div>
+      <div class="row">
+        <b>Требуется пароль:</b>
+        <span><?=($serverInfo['result']['server']['extra']['password'] == 1 ? 'Да' : 'Нет');?></span>
+      </div>
+      <div class="row">
+        <b>Тип:</b>
+        <span><?=($serverInfo['result']['server']['extra']['dedicated'] == 'd' ? 'Выделенный' : 'Виртуальный');?></span>
+      </div>
+      <div class="row">
+        <b>Расположение:</b>
+        <span><?=$serverInfo['result']['server']['location']['continent']['name'];?>, <?=$serverInfo['result']['server']['location']['country']['name'];?></span>
+      </div>
+      <div class="row">
+        <b>Ранк:</b>
+        <span><?=$serverInfo['result']['server']['rank']['global'];?></span>
+      </div>
+      <div class="row">
+        <b>Пинг:</b>
+        <span><?=$serverInfo['result']['server']['ping'];?></span>
+      </div>
+      <div class="row">
+        <b>Uptime:</b>
+        <span><?=$serverInfo['result']['server']['health']['average_uptime'];?>%</span>
+      </div>
     </div>
 
     <div class="fl_r"><img width="160" height="120" src="<? if (strlen($serverInfo['result']['server']['map']['image'])): ?><?=$serverInfo['result']['server']['map']['image'];?><? else: ?>//maps.serverwidget.com/noimage.png<? endif; ?>" alt="<?=$serverInfo['result']['server']['map']['name'];?>" title="<?=$serverInfo['result']['server']['map']['name'];?>"></div>
 
     <div class="clear"></div>
+
+    <hr>
+
+    <div align="center" style="padding: 10px 0px 0px 0px;">Обновление информации будет через <b id="reloadAfter"></b></div>
+
+<script type="text/javascript">
+function geByTag(searchTag, node) {
+  node = node || document;
+  var elems = [], nodes = node.getElementsByTagName(searchTag);
+
+  if (nodes.length) {
+    for (var i = 0; i < nodes.length; i++) {
+      elems.push(nodes[i]);
+    }
+  }
+
+  return elems;
+}
+
+function geByClass(searchClass, node, tag) {
+  node = node || document;
+  tag = tag || '*';
+
+  if (node.querySelectorAll && tag != '*') {
+    return node.querySelectorAll(tag + '.' + searchClass.replace(/\s+/g, '.'));
+  }
+
+  var classElements = [];
+
+  if (node.getElementsByClassName) {
+    var nodes = node.getElementsByClassName(searchClass);
+
+    if (tag != '*') {
+      tag = tag.toUpperCase();
+
+      for (var i = 0, l = nodes.length; i < l; ++i) {
+        if (nodes[i].tagName.toUpperCase() == tag) {
+          classElements.push(nodes[i]);
+        }
+      }
+    } else {
+      classElements = Array.prototype.slice.call(nodes);
+    }
+
+    return classElements;
+  }
+
+  var els = geByTag(tag, node), pattern = new RegExp('(^|\\s)' + searchClass + '(\\s|$)');
+
+  for (var i = 0, l = els.length; i < l; ++i) {
+    if (pattern.test(els[i].className)) {
+      classElements.push(els[i]);
+    }
+  }
+
+  return classElements;
+}
+
+function formatTime(seconds) {
+  var days   = Math.floor(seconds / 86400);
+  var hours   = Math.floor((seconds - (days * 86400)) / 3600);
+  var minutes = Math.floor((seconds - (days * 86400) - (hours * 3600)) / 60);
+  seconds = seconds - (days * 86400) - (hours * 3600) - (minutes * 60);
+
+  if (hours && hours   < 10) {hours = "0"+hours;}
+  if (minutes < 10) {minutes = "0"+minutes;}
+  if (seconds < 10) {seconds = "0"+seconds;}
+
+  return (days ? days+'d ' : '')+(hours ? hours+':' : '')+minutes+':'+seconds;
+}
+
+function declOfNum(number, str) {
+  var cases = [2, 0, 1, 1, 1, 2];
+
+  str = str[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+
+  return str.replace(/%n/g, number);
+}
+
+var reloadAfter = <?=(60 - $serverInfo['result']['server']['scan']['left']);?>, elementReloadAfter = document.getElementById('reloadAfter');
+
+if (reloadAfter <= 60) {
+  elementReloadAfter.innerHTML = declOfNum(reloadAfter, ['%n секунду', '%n секунды', '%n секунд']);
+
+  setInterval(function() {
+    reloadAfter--;
+
+    if (reloadAfter <= 0) {
+      elementReloadAfter.parentNode.innerHTML = '<b>Обновление информации...</b>';
+
+      setTimeout(function() {
+        window.location.reload();
+      }, 500);
+    } else {
+      elementReloadAfter.innerHTML = declOfNum(reloadAfter, ['%n секунду', '%n секунды', '%n секунд']);
+    }
+  }, 1000);
+} else {
+  elementReloadAfter.parentNode.innerHTML = 'Сервер был доступен ' + declOfNum(reloadAfter, ['%n секунду', '%n секунды', '%n секунд']) + ' назад';
+}
+
+function updatePlayerTime(elements) {
+  var i = 0;
+
+  for (var key in elements) {
+    var element = elements[key], time = parseInt(element.getAttribute('time')) || 0;
+
+    time++;
+
+    element.setAttribute('time', time);
+    element.innerHTML = formatTime(time);
+
+    i++;
+  }
+
+  if (i > 0) {
+    setTimeout(function() {
+      updatePlayerTime(elements);
+    }, 1000);
+  }
+}
+</script>
+
+    <hr>
+
+    <h3>Все карты сервера:</h3>
+
+    <table width="100%" cellpadding="5" cellspacing="0">
+      <tr>
+        <th align="left">#</th>
+        <th align="center">Изображение</th>
+        <th align="left">Название</th>
+        <th align="right">Процент</th>
+      </tr>
+<? foreach ($maps['result']['data'] as $idx => $map): ?>
+      <tr<? if ($idx%2 !== 0): ?> class="dark"<? endif; ?>>
+        <td align="left"><?=($idx + 1)?>.</td>
+        <td align="center" width="20%"><img src="<?=(strlen($map['image']) ? $map['image'] : '//maps.serverwidget.com/noimage.png');?>" height="60" alt="<?=$map['name'];?>" title="<?=$map['name'];?>"></td>
+        <td align="left" width="40%" style="padding-left: 5px;"><?=$map['name'];?></td>
+        <td align="right" width="40%" style="padding-left: 5px;"><?=$map['value'];?>%</td>
+      </tr>
+<? endforeach; ?>
+    </table>
 
     <hr>
 
@@ -187,7 +363,7 @@ span.color-green {
         <td align="left"><?=$player['rank'];?>.</td>
         <td align="left"><?=htmlspecialchars($player['name']);?></td>
         <td align="center"><?=$player['score'];?></td>
-        <td align="right"><?=$player['date'];?></td>
+        <td align="right" class="update-time" time="<?=$player['time'];?>"><?=$player['date'];?></td>
       </tr>
 <? endforeach; ?>
 <? else: ?>
@@ -196,6 +372,10 @@ span.color-green {
       </tr>
 <? endif; ?>
     </table>
+
+<script type="text/javascript">
+updatePlayerTime(geByClass('update-time'));
+</script>
 
     <hr>
 
@@ -219,30 +399,11 @@ span.color-green {
       </tr>
 <? endif; ?>
     </table>
-
-    <hr>
-
-    <h3>Карты сервера:</h3>
-
-    <table width="100%" cellpadding="5" cellspacing="0">
-      <tr>
-        <th align="left">#</th>
-        <th align="center">Изображение</th>
-        <th align="left">Название</th>
-        <th align="right">Процент</th>
-      </tr>
-<? foreach ($maps['result']['data'] as $idx => $map): ?>
-      <tr<? if ($idx%2 !== 0): ?> class="dark"<? endif; ?>>
-        <td align="left"><?=($idx + 1)?>.</td>
-        <td align="center" width="20%"><img src="<?=(strlen($map['image']) ? $map['image'] : '//maps.serverwidget.com/noimage.png');?>" height="60" alt="<?=$map['name'];?>" title="<?=$map['name'];?>"></td>
-        <td align="left" width="40%" style="padding-left: 5px;"><?=$map['name'];?></td>
-        <td align="right" width="40%" style="padding-left: 5px;"><?=$map['value'];?>%</td>
-      </tr>
-<? endforeach; ?>
-    </table>
 <? else: ?>
     <div class="empty_table"><?=$serverInfo['error']['error_msg'];?></div>
 <? endif; ?>
+
+    <hr>
 
     <div class="footer">jtiq &copy; SERVERWIDGET, 2015</div>
   </div>
