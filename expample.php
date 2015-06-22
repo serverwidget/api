@@ -31,7 +31,7 @@ body, html {
 }
 
 a {
-  color: #45688E;
+  color: #67809f;
 }
 
 .fl_r {
@@ -58,13 +58,13 @@ a {
 h2 {
   margin: 0;
   padding: 15px 0 0 0;
-  color: #45688E;
+  color: #67809f;
 }
 
 h3 {
   margin: 0;
   padding: 10px 0;
-  color: #45688E;
+  color: #67809f;
 }
 
 hr {
@@ -113,7 +113,7 @@ div.footer {
 table tr th {
   line-height: 24px;
   background: #DEE5EB;
-  color: #45688E;
+  color: #67809f;
 }
 
 table tr td {
@@ -136,11 +136,25 @@ span.color-red {
 span.color-green {
   color: green;
 }
+
+a.logo {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo4RDA3MTg2NzAxMTZFNTExOTYzRkYwODIyMUY2MDdFMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBQTk1NEEwMDE3NkIxMUU1QjBFMURBNDFBNjI2QkNCQyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBQTk1NDlGRjE3NkIxMUU1QjBFMURBNDFBNjI2QkNCQyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBCNjIxQkRFNjcxN0U1MTE5MjBDODBDMzg0MjJGQjMzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhEMDcxODY3MDExNkU1MTE5NjNGRjA4MjIxRjYwN0UwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+1brCRQAABK5JREFUeNq8V0tvW0UUPvdeu67jkEfjhDhOm9hJ49CSNG1erUAVQt1U4rFkByuExK9gj9iyBFQ2bBASC7qBXYG0oSUpTRvywHHq9+PGduI6dvzgnMncm7F9r91IlY/0Sb5zxjPfnNeckT774ls4hfQjphHXEW8jFhEK4gHiHuJPxGNE9GUXtDTRdSDGEFcQ84hrCB/CiZDq5t7iIEkhNhB/c2IriC1ErhUBO19kgW/4JmLIYLNW0oe4wfE5osotsoZY5qR+RRzUE7iN+BFevdABXByalT5B3KEfsjBxHtonC9oPkcBcGwlcqyfQhbjURgI+nlE6gXEecA1CEVSpVk+9QxX/0+Rv5xCTIoGZmqiRJChXKpA/LGIESdBx9kzNYqhGfRWKR2WGcrnCxk42B7DZrCDLEluD1pIkydANWhbMipoSLtjf+xosTo8xPI+q8PUPv4HNejydNu/utIMT55Ck91+Amj5gG5IUikfw0e1FmJ4YhqXVbYaYmgFFFkPuOOY0AldFzVGpBN7hAfjw3eNYsaMFejo7IJcvsE0KxRJ88P5VuDnrY/qn22H46ru7qFOY6Wn+pMfFCL73zgzsIcFgTAXFVkOAKqpCI27ERVFjVRTYCESZ+UjotKNuJxIrsw0c9jNwcWRQnz8y1Ae9XQ5marLe0EAPg2bNjZ0IWCxKvQu8CI/MmThFjYK8UmhSfyipj10ad0OFb+Dq7wGXs1vXOew2RrBUIn0ZfKMuXUfuiyWzbM066URMyfxiaRBa6MlmUP9+A01KpiUrTAin1/XeIUbQgta7PO7Wx9f/C7OYMKnn14nAW4aXBC607o/o0e9+vZednFxAm9XLxOggWDFIyRWe4X59nOJDbjx9DYE5MwLh+B6EEFpq0smZuYUNNCGf93V3wgVXH0tbkr1sDgKRJIspE7ki15XjmlzPF4rwDE2on9IzCN7zA9DlOMu+E+q+TpBSbOzCALOEJpuBGGQP8np6GgizzSMzrSzJsLYV0r8p0G7O+fTvJ1tBWP7Hf3LDTHlr3PN0O3RcSs3lMRH4w0xrxdTZCSUgg3nM6ieaeP6yp+aE6/4TC01h4TnvOsdrSZnpDdJPlPsyb6OMLYCmy+znYXM3rl/sWjpR+Q2EkxCK7UE2d6i7QeYl93lEhbhqmH6iLJF2FaGazaCLaG0r2DAeTqQhibXi4EUB/MFEg55ip4gVs0k7RS3aChHY5T2bqRs2dqLMpKKQeQ8LR4zguhCoIoEWp99B+LUZq6ZdKy4ST2XR3Kma8X+xRpC1SU9lWxQ1k4PdSIqlcrMApFDRLiNqFj817+okuPPzPZbnFXbPVzE4k3g7WhmJSDwNX37zCws4+ia3HGL1a5J+JH+Jt+FK094dgyuMmwSjquAai94DMDewqlnl6Su1in6ShyKBTd46Dxp3RVVmamjiU2vrDUVJ0zUhdkQ08KyNPSE9XGL1XfHDNhJ4ZNSWL7eRwAOjp9ldxMf8wTnLW+feV7RhhpudTn4f8ZMRgX3E9xzaG2+Sd68LvHOix6qjxWZ0cfh5ni9z11J8JU77OqbK8zsH8Gf4CH8t3+Cd1Ax3I6XxEr9X6HeAmqqXMc3/AgwAlNezEuZiD+oAAAAASUVORK5CYII=') center center no-repeat;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: -5px;
+  display: block;
+}
+
+.github {
+  font-size: 12px;
+  line-height: 28px;
+}
 </style>
 </head>
 <body>
   <div class="width">
-    <h2>Serverwidget API <div class="fl_r">Скачать с <a href="https://github.com/serverwidget/api/archive/master.zip" rel="nofoloow" target="_blank">github.com</a></div></h2>
+    <h2><a href="" class="logo fl_l"></a> <span style="display: block; padding-left: 40px;">Serverwidget API <div class="github fl_r">Скачать с <a href="https://github.com/serverwidget/api/archive/master.zip" rel="nofoloow" target="_blank">github.com</a></div></span></h2>
 
     <hr>
 <? if (isset($serverInfo['result'])): ?>
@@ -202,10 +216,6 @@ span.color-green {
     <div class="fl_r"><img width="160" height="120" src="<? if (strlen($serverInfo['result']['server']['map']['image'])): ?><?=$serverInfo['result']['server']['map']['image'];?><? else: ?>//maps.serverwidget.com/noimage.png<? endif; ?>" alt="<?=$serverInfo['result']['server']['map']['name'];?>" title="<?=$serverInfo['result']['server']['map']['name'];?>"></div>
 
     <div class="clear"></div>
-
-    <hr>
-
-    <div align="center" style="padding: 10px 0px 0px 0px;">Обновление информации будет через <b id="reloadAfter"></b></div>
 
 <script type="text/javascript">
 function geByTag(searchTag, node) {
@@ -279,28 +289,6 @@ function declOfNum(number, str) {
   str = str[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 
   return str.replace(/%n/g, number);
-}
-
-var reloadAfter = <?=(60 - $serverInfo['result']['server']['scan']['left']);?>, elementReloadAfter = document.getElementById('reloadAfter');
-
-if (reloadAfter <= 60) {
-  elementReloadAfter.innerHTML = declOfNum(reloadAfter, ['%n секунду', '%n секунды', '%n секунд']);
-
-  setInterval(function() {
-    reloadAfter--;
-
-    if (reloadAfter <= 0) {
-      elementReloadAfter.parentNode.innerHTML = '<b>Обновление информации...</b>';
-
-      setTimeout(function() {
-        window.location.reload();
-      }, 500);
-    } else {
-      elementReloadAfter.innerHTML = declOfNum(reloadAfter, ['%n секунду', '%n секунды', '%n секунд']);
-    }
-  }, 1000);
-} else {
-  elementReloadAfter.parentNode.innerHTML = 'Сервер был доступен ' + declOfNum(reloadAfter, ['%n секунду', '%n секунды', '%n секунд']) + ' назад';
 }
 
 function updatePlayerTime(elements) {
