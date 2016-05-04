@@ -5,7 +5,7 @@ PHP Serverwidget API Example
 ```
 $API = new ServerWidgetAPI('API_TOKEN_KEY');
 $serverInfo = $API->serverGet('217.106.106.117:27015');
-if ($serverInfo['result']) {
+if (count($serverInfo['result']) && is_array($serverInfo['result'])) {
   echo $serverInfo['result'][0]['name'];
 }
 ```
