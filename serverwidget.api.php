@@ -3,33 +3,31 @@
 /**
  *
  *  Usage:
- *    $sw_api = new ServerWidgetAPI('YOUR_API_ID', 'YOUR_API_KEY', 'API_LANG', 'API_VERSION');
+ *    $sw_api = new ServerWidgetAPI('API_TOKEN_KEY', 'API_LANG', 'API_VERSION');
  *    $serverInfo = $sw_api->serverGet('217.106.106.117:27015');
  *
  *    if ($serverInfo['result']) {
- *      echo $serverInfo['result']['server']['name'];
+ *      echo $serverInfo['result'][0]['name'];
  *    }
  *
 **/
 
 Class ServerWidgetAPI {
-  private $api_url = 'https://api.serverwidget.com/';
-  private $api_id = 0;
-  private $api_key = '';
+  private $api_url = 'http://api.serverwidget.com/';
+  private $api_token = '';
   private $api_lang = 'ru';
-  private $api_version = 'v1';
+  private $api_version = '2.0';
 
   // On Class init
-  public function __construct($api_id = 0, $api_key = '', $api_lang = 'ru', $api_version = 'v1') {
-    $this->api_id = $api_id;
-    $this->api_key = $api_key;
+  public function __construct($api_token = '', $api_lang = 'ru', $api_version = '2.0') {
+    $this->api_token = $api_token;
     $this->api_lang = $api_lang;
     $this->api_version = $api_version;
   }
 
   // Method: server.get
   public function serverGet($address) {
-    return $this->method('server.get', array('address' => $address));
+    return $this->method('server.get', array('address' => $address, "fields" => "players,map,game,location,update,extra,uptime,rank,ping"));
   }
 
   // Method: server.players
@@ -64,16 +62,17 @@ Class ServerWidgetAPI {
 
   // Call method
   public function method($name, $params = array()) {
-    $url = $this->api_url.$this->api_version."/method/$name";
+    $url = $this->api_url."/method/$name";
 
     return json_decode($this->request($url, $params), true);
   }
 
   // Requesting
   private function request($url, $params = array()) {
-    $params['api_id'] = $this->api_id;
-    $params['api_key'] = $this->api_key;
+    $params['token'] = $this->api_token;
     $params['lang'] = $this->api_lang;
+    $params['v'] = $this->api_version;
+    $params['https'] = 1;
 
     $url = $url . (is_array($params) && count($params) ? '?'.$this->params($params) : '');
 
