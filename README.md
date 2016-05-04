@@ -1,13 +1,13 @@
-# serverwidget-api
-PHP Serverwidget API Example
+# Serverwidget API
+PHP пример Serverwidget API
 
-# Usage:
+# Как использовать:
 ```
-$API = new ServerWidgetAPI('API_TOKEN_KEY');
-$serverInfo = $API->serverGet('217.106.106.117:27015');
+$API = new ServerWidgetAPI('Ваш токен ключ');
+$serverInfo = $API->serverGet('IP адрес сервера');
 if (count($serverInfo['result']) && is_array($serverInfo['result'])) {
   echo $serverInfo['result'][0]['name'];
 }
 ```
 
-Result example: [https://playga.me/example.php](https://playga.me/example.php)
+Полноценный пример: [https://playga.me/example.php](https://playga.me/example.php)
