@@ -1,7 +1,7 @@
-# Serverwidget API
+## Serverwidget API
 PHP пример Serverwidget API
 
-# Как использовать:
+### Как использовать:
 ```
 $API = new ServerWidgetAPI('Ваш токен ключ');
 $serverInfo = $API->serverGet('IP адрес сервера');
@@ -12,5 +12,5 @@ if (count($serverInfo['result']) && is_array($serverInfo['result'])) {
 
 Полноценный пример: [https://playga.me/example.php](https://playga.me/example.php)
 
-## Документация:
+### Документация:
 Наш официальный сайт: [https://serverwidget.com/dev](https://serverwidget.com/dev)
