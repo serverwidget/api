@@ -4,9 +4,12 @@ PHP пример Serverwidget API
 ### Как использовать:
 ```
 $API = new ServerWidgetAPI('Ваш токен ключ');
-$serverInfo = $API->serverGet('IP адрес сервера');
-if (count($serverInfo['result']) && is_array($serverInfo['result'])) {
-  echo $serverInfo['result'][0]['name'];
+$response = $API->method('Название метода', array(Параметры запроса));
+
+if (!isset($response['error'])) {
+  // Выполнить что то если нет ошибок
+} else {
+  // Выполнить что то если есть ошибки
 }
 ```
 
