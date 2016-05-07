@@ -23,41 +23,6 @@ Class ServerWidgetAPI {
     $this->api_version = $api_version;
   }
 
-  // Метод: server.get
-  public function serverGet($address) {
-    return $this->method('server.get', array('address' => $address, "fields" => "players,map,game,location,update,extra,uptime,rank,ping"));
-  }
-
-  // Метод: server.players
-  public function serverPlayers($address) {
-    return $this->method('server.players', array('address' => $address));
-  }
-
-  // Метод: server.rules
-  public function serverRules($address) {
-    return $this->method('server.rules', array('address' => $address));
-  }
-
-  // Метод: server.maps
-  public function serverMaps($address) {
-    return $this->method('server.maps', array('address' => $address));
-  }
-
-  // Метод: server.stats
-  public function serverStats($address, $start_time = 0, $end_time = 0) {
-    return $this->method('server.stats', array('address' => $address, 'start_time' => $start_time, 'end_time' => $end_time));
-  }
-
-  // Метод: server.ping
-  public function serverPing($address, $start_time = 0, $end_time = 0) {
-    return $this->method('server.ping', array('address' => $address, 'start_time' => $start_time, 'end_time' => $end_time));
-  }
-
-  // Метод: server.uptime
-  public function serverUptime($address, $start_time = 0, $end_time = 0) {
-    return $this->method('server.uptime', array('address' => $address, 'start_time' => $start_time, 'end_time' => $end_time));
-  }
-
   // Выполнение метода
   public function method($name, $params = array()) {
     $url = $this->api_url."/method/$name";
@@ -80,6 +45,8 @@ Class ServerWidgetAPI {
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
       curl_setopt($ch, CURLOPT_HEADER, 0);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 
       $result = curl_exec($ch);
 
