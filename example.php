@@ -2,22 +2,27 @@
 
 include 'serverwidget.api.php';
 
-$address = (isset($_GET['address']) && strlen($_GET['address'])) ? trim($_GET['address']) : '217.106.106.117:27015';
+$address = (isset($_GET['address']) && strlen($_GET['address'])) ? trim($_GET['address']) : '78.107.35.5:27015';
 
-$sw_api = new ServerWidgetAPI('10007', 'cPlBWPQ74NEF6Ujw3g4HviiPGvZ');
-$serverInfo = $sw_api->serverGet($address);
+$API = new ServerWidgetAPI('Ваш токен ключ');
+$serverInfo = $API->method("server.get", array(
+  "address" => $address,
+  "fields" => "players,map,game,location,update,extra,uptime,rank,ping"
+));
 
-if (isset($serverInfo['result'])) {
-  $players = $sw_api->serverPlayers($address);
-  $rules = $sw_api->serverRules($address);
-  $maps = $sw_api->serverMaps($address);
+if (count($serverInfo['result']) && is_array($serverInfo['result'])) {
+  $server = $serverInfo['result'][0];
+  $players = $API->method("server.players", array("address" => $address));
+  $rules = $API->method("server.rules", array("address" => $address));
+  $maps = $API->method("server.maps", array("address" => $address));
 }
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Serverwidget API Example</title>
+<title>Пример Serverwidget API</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,cyrillic" rel="stylesheet" type="text/css">
 <style>
 body, html {
   width: 100%;
@@ -25,13 +30,17 @@ body, html {
   margin: 0;
   padding: 0;
   background: #f3f3f3;
-  font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
-  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
   color: #555;
 }
 
+* {
+  outline: 0;
+}
+
 a {
-  color: #67809f;
+  color: #52A9EA;
 }
 
 .fl_r {
@@ -58,13 +67,17 @@ a {
 h2 {
   margin: 0;
   padding: 15px 0 0 0;
-  color: #67809f;
+  color: #52A9EA;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 h3 {
   margin: 0;
   padding: 10px 0;
-  color: #67809f;
+  color: #52A9EA;
+  font-size: 18px;
+  font-weight: 400;
 }
 
 hr {
@@ -85,11 +98,12 @@ div.row > b {
   text-overflow: ellipsis;
   height: 24px;
   line-height: 24px;
+  font-weight: 600;
 }
 
 div.row > span {
   display: inline-block;
-  width: 380px;
+  width: 420px;
   padding-left: 5px;
   overflow: hidden;
   white-space: nowrap;
@@ -114,6 +128,7 @@ table tr th {
   line-height: 24px;
   background: #DEE5EB;
   color: #67809f;
+  font-weight: 600;
 }
 
 table tr td {
@@ -138,82 +153,87 @@ span.color-green {
 }
 
 a.logo {
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo4RDA3MTg2NzAxMTZFNTExOTYzRkYwODIyMUY2MDdFMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBQTk1NEEwMDE3NkIxMUU1QjBFMURBNDFBNjI2QkNCQyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBQTk1NDlGRjE3NkIxMUU1QjBFMURBNDFBNjI2QkNCQyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBCNjIxQkRFNjcxN0U1MTE5MjBDODBDMzg0MjJGQjMzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhEMDcxODY3MDExNkU1MTE5NjNGRjA4MjIxRjYwN0UwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+1brCRQAABK5JREFUeNq8V0tvW0UUPvdeu67jkEfjhDhOm9hJ49CSNG1erUAVQt1U4rFkByuExK9gj9iyBFQ2bBASC7qBXYG0oSUpTRvywHHq9+PGduI6dvzgnMncm7F9r91IlY/0Sb5zxjPfnNeckT774ls4hfQjphHXEW8jFhEK4gHiHuJPxGNE9GUXtDTRdSDGEFcQ84hrCB/CiZDq5t7iIEkhNhB/c2IriC1ErhUBO19kgW/4JmLIYLNW0oe4wfE5osotsoZY5qR+RRzUE7iN+BFevdABXByalT5B3KEfsjBxHtonC9oPkcBcGwlcqyfQhbjURgI+nlE6gXEecA1CEVSpVk+9QxX/0+Rv5xCTIoGZmqiRJChXKpA/LGIESdBx9kzNYqhGfRWKR2WGcrnCxk42B7DZrCDLEluD1pIkydANWhbMipoSLtjf+xosTo8xPI+q8PUPv4HNejydNu/utIMT55Ck91+Amj5gG5IUikfw0e1FmJ4YhqXVbYaYmgFFFkPuOOY0AldFzVGpBN7hAfjw3eNYsaMFejo7IJcvsE0KxRJ88P5VuDnrY/qn22H46ru7qFOY6Wn+pMfFCL73zgzsIcFgTAXFVkOAKqpCI27ERVFjVRTYCESZ+UjotKNuJxIrsw0c9jNwcWRQnz8y1Ae9XQ5marLe0EAPg2bNjZ0IWCxKvQu8CI/MmThFjYK8UmhSfyipj10ad0OFb+Dq7wGXs1vXOew2RrBUIn0ZfKMuXUfuiyWzbM066URMyfxiaRBa6MlmUP9+A01KpiUrTAin1/XeIUbQgta7PO7Wx9f/C7OYMKnn14nAW4aXBC607o/o0e9+vZednFxAm9XLxOggWDFIyRWe4X59nOJDbjx9DYE5MwLh+B6EEFpq0smZuYUNNCGf93V3wgVXH0tbkr1sDgKRJIspE7ki15XjmlzPF4rwDE2on9IzCN7zA9DlOMu+E+q+TpBSbOzCALOEJpuBGGQP8np6GgizzSMzrSzJsLYV0r8p0G7O+fTvJ1tBWP7Hf3LDTHlr3PN0O3RcSs3lMRH4w0xrxdTZCSUgg3nM6ieaeP6yp+aE6/4TC01h4TnvOsdrSZnpDdJPlPsyb6OMLYCmy+znYXM3rl/sWjpR+Q2EkxCK7UE2d6i7QeYl93lEhbhqmH6iLJF2FaGazaCLaG0r2DAeTqQhibXi4EUB/MFEg55ip4gVs0k7RS3aChHY5T2bqRs2dqLMpKKQeQ8LR4zguhCoIoEWp99B+LUZq6ZdKy4ST2XR3Kma8X+xRpC1SU9lWxQ1k4PdSIqlcrMApFDRLiNqFj817+okuPPzPZbnFXbPVzE4k3g7WhmJSDwNX37zCws4+ia3HGL1a5J+JH+Jt+FK094dgyuMmwSjquAai94DMDewqlnl6Su1in6ShyKBTd46Dxp3RVVmamjiU2vrDUVJ0zUhdkQ08KyNPSE9XGL1XfHDNhJ4ZNSWL7eRwAOjp9ldxMf8wTnLW+feV7RhhpudTn4f8ZMRgX3E9xzaG2+Sd68LvHOix6qjxWZ0cfh5ni9z11J8JU77OqbK8zsH8Gf4CH8t3+Cd1Ax3I6XxEr9X6HeAmqqXMc3/AgwAlNezEuZiD+oAAAAASUVORK5CYII=') center center no-repeat;
+  background: url(/logo.svg?1) center center no-repeat;
   width: 32px;
   height: 32px;
   position: relative;
-  top: -5px;
+  top: -3px;
   display: block;
+  background-size: 32px 32px;
 }
 
 .github {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 28px;
 }
 </style>
 </head>
 <body>
   <div class="width">
-    <h2><a href="" class="logo fl_l"></a> <span style="display: block; padding-left: 40px;">Serverwidget API <div class="github fl_r">Скачать с <a href="https://github.com/serverwidget/api/archive/master.zip" rel="nofoloow" target="_blank">github.com</a></div></span></h2>
+    <h2><a href="/example.php" class="logo fl_l"></a> <span style="display: block; padding-left: 40px;"> API 2.0 <div class="github fl_r">Скачать с <a href="https://github.com/serverwidget/api" rel="nofoloow" target="_blank">github.com</a></div></span></h2>
 
     <hr>
-<? if (isset($serverInfo['result'])): ?>
+<? if (is_array($server)): ?>
     <div class="fl_l">
       <div class="row">
         <b>Статус сервера:</b>
-        <span><? if ($serverInfo['result']['server']['online'] == 1): ?><span class="color-green">Работает</span><? else: ?><span class="color-red">Выключен</span><? endif; ?></span>
+        <span><? if ($server['online'] == 1): ?><span class="color-green">Работает</span><? else: ?><span class="color-red">Выключен</span><? endif; ?></span>
       </div>
       <div class="row">
         <b>Название сервера:</b>
-        <span><?=htmlspecialchars($serverInfo['result']['server']['name']);?></span>
+        <span><?=htmlspecialchars($server['name']);?></span>
+      </div>
+      <div class="row">
+        <b>Адрес сервера:</b>
+        <span><?=htmlspecialchars($server['address']);?></span>
       </div>
       <div class="row">
         <b>Игра:</b>
-        <span><?=$serverInfo['result']['server']['game']['name'];?></span>
+        <span><?=$server['game']['name'];?></span>
       </div>
       <div class="row">
         <b>Карта:</b>
-        <span><?=htmlspecialchars($serverInfo['result']['server']['map']['name']);?></span>
+        <span><?=htmlspecialchars($server['map']['name']);?></span>
       </div>
       <div class="row">
         <b>Игроки:</b>
-        <span><?=$serverInfo['result']['server']['players']['now'];?> / <?=$serverInfo['result']['server']['players']['max'];?></span>
+        <span><?=$server['players']['now'];?> / <?=$server['players']['max'];?></span>
       </div>
       <div class="row">
         <b>VAC античит:</b>
-        <span><?=($serverInfo['result']['server']['extra']['vac'] == 1 ? 'Да' : 'Нет');?></span>
+        <span><?=($server['extra']['vac'] == 1 ? 'Да' : 'Нет');?></span>
       </div>
       <div class="row">
         <b>ОС сервера:</b>
-        <span><?=($serverInfo['result']['server']['extra']['os'] == 'l' ? 'Linux' : ($serverInfo['result']['server']['extra']['os'] == 'w' ? 'Windows' : 'Mac'));?></span>
+        <span><?=($server['extra']['os'] == 'l' ? 'Linux' : ($server['extra']['os'] == 'w' ? 'Windows' : 'Mac'));?></span>
       </div>
       <div class="row">
         <b>Требуется пароль:</b>
-        <span><?=($serverInfo['result']['server']['extra']['password'] == 1 ? 'Да' : 'Нет');?></span>
+        <span><?=($server['extra']['password'] == 1 ? 'Да' : 'Нет');?></span>
       </div>
       <div class="row">
         <b>Тип:</b>
-        <span><?=($serverInfo['result']['server']['extra']['dedicated'] == 'd' ? 'Выделенный' : 'Виртуальный');?></span>
+        <span><?=($server['extra']['dedicated'] == 'd' ? 'Выделенный' : 'Виртуальный');?></span>
       </div>
       <div class="row">
         <b>Расположение:</b>
-        <span><?=$serverInfo['result']['server']['location']['continent']['name'];?>, <?=$serverInfo['result']['server']['location']['country']['name'];?></span>
+        <span><?=$server['location']['country']['name'];?></span>
       </div>
       <div class="row">
         <b>Ранк:</b>
-        <span><?=$serverInfo['result']['server']['rank']['global'];?></span>
+        <span><?=$server['rank'];?></span>
       </div>
       <div class="row">
         <b>Пинг:</b>
-        <span><?=$serverInfo['result']['server']['ping'];?></span>
+        <span><?=$server['ping'];?></span>
       </div>
       <div class="row">
         <b>Uptime:</b>
-        <span><?=$serverInfo['result']['server']['health']['average_uptime'];?>%</span>
+        <span><?=$server['uptime'];?>%</span>
       </div>
     </div>
 
-    <div class="fl_r"><img width="160" height="120" src="<? if (strlen($serverInfo['result']['server']['map']['image'])): ?><?=$serverInfo['result']['server']['map']['image'];?><? else: ?>//maps.serverwidget.com/noimage.png<? endif; ?>" alt="<?=$serverInfo['result']['server']['map']['name'];?>" title="<?=$serverInfo['result']['server']['map']['name'];?>"></div>
+    <div class="fl_r"><img width="160" height="120" src="<? if (strlen($server['map']['image'])): ?><?=$server['map']['image'];?><? else: ?>https://img.serverwidget.com/maps/noimage.png<? endif; ?>" alt="<?=$server['map']['name'];?>" title="<?=$server['map']['name'];?>"></div>
 
     <div class="clear"></div>
 
@@ -324,10 +344,10 @@ function updatePlayerTime(elements) {
         <th align="left">Название</th>
         <th align="right">Процент</th>
       </tr>
-<? foreach ($maps['result']['data'] as $idx => $map): ?>
+<? foreach ($maps['result'] as $idx => $map): ?>
       <tr<? if ($idx%2 !== 0): ?> class="dark"<? endif; ?>>
         <td align="left"><?=($idx + 1)?>.</td>
-        <td align="center" width="20%"><img src="<?=(strlen($map['image']) ? $map['image'] : '//maps.serverwidget.com/noimage.png');?>" height="60" alt="<?=$map['name'];?>" title="<?=$map['name'];?>"></td>
+        <td align="center" width="20%"><img src="<?=(strlen($map['image']) ? $map['image'] : 'https://img.serverwidget.com/maps/noimage.png');?>" height="60" alt="<?=$map['name'];?>" title="<?=$map['name'];?>"></td>
         <td align="left" width="40%" style="padding-left: 5px;"><?=$map['name'];?></td>
         <td align="right" width="40%" style="padding-left: 5px;"><?=$map['value'];?>%</td>
       </tr>
@@ -345,8 +365,8 @@ function updatePlayerTime(elements) {
         <th align="center">Очки</th>
         <th align="right">Время в игре</th>
       </tr>
-<? if (count($players['result']['data'])): ?>
-<? foreach ($players['result']['data'] as $idx => $player): ?>
+<? if (count($players['result'])): ?>
+<? foreach ($players['result'] as $idx => $player): ?>
       <tr<? if ($idx%2 !== 0): ?> class="dark"<? endif; ?>>
         <td align="left"><?=$player['rank'];?>.</td>
         <td align="left"><?=htmlspecialchars($player['name']);?></td>
@@ -374,8 +394,8 @@ updatePlayerTime(geByClass('update-time'));
         <th align="right">Ключ</th>
         <th align="left">Значение</th>
       </tr>
-<? if (count($rules['result']['data'])): ?>
-<? foreach ($rules['result']['data'] as $idx => $rule): ?>
+<? if (count($rules['result'])): ?>
+<? foreach ($rules['result'] as $idx => $rule): ?>
       <tr<? if ($idx%2 !== 0): ?> class="dark"<? endif; ?>>
         <td align="right" width="50%"><?=$rule['key'];?></td>
         <td align="left" width="50%" style="padding-left: 5px;"><?=htmlspecialchars($rule['value']);?></td>
@@ -393,7 +413,7 @@ updatePlayerTime(geByClass('update-time'));
 
     <hr>
 
-    <div class="footer">jtiq &copy; SERVERWIDGET, 2015</div>
+    <div class="footer">jtiq &copy; SERVERWIDGET, 2016</div>
   </div>
 </body>
 </html>
