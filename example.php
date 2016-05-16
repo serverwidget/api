@@ -408,7 +408,7 @@ updatePlayerTime(geByClass('update-time'));
 <? endif; ?>
     </table>
 <? else: ?>
-    <div class="empty_table"><?=$serverInfo['error']['error_msg'];?></div>
+    <div class="empty_table"><?=$serverInfo['error']['message'];?></div>
 <? endif; ?>
 
     <hr>
