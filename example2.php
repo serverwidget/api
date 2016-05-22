@@ -156,7 +156,7 @@ a.logo {
 
     <hr>
 
-    <div id="server_wrapper"></div>
+    <div id="server_wrapper"><div class="empty_table">Идёт загрузка данных...</div></div>
 
 <script>
 var address = '78.107.35.5:27015', server_wrapper = document.getElementById('server_wrapper');
