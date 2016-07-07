@@ -1,13 +1,8 @@
 <?php
 
 /**
- *  Пример:
- *    $API = new ServerWidgetAPI('Токен ключ');
- *    $serverInfo = $API->serverGet('IP адрес сервера');
- *
- *    if (count($serverInfo['result']) && is_array($serverInfo['result'])) {
- *      echo $serverInfo['result'][0]['name'];
- *    }
+ * Serverwidget API v2.1
+ * Url: https://serverwidget.com/
 **/
 
 Class ServerWidgetAPI {
