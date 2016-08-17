@@ -14,7 +14,7 @@ Class ServerWidgetAPI {
   private $api_url = 'http://api.serverwidget.com/';
   private $api_token = '';
   private $api_lang = 'ru';
-  private $api_version = '2.0';
+  private $api_version = '2.2';
 
   // Иницилизация класса
   public function __construct($api_token = '', $api_lang = 'ru', $api_version = '2.0') {
