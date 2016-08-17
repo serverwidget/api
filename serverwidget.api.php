@@ -3,7 +3,7 @@
 /**
  *  Пример:
  *    $API = new ServerWidgetAPI('Токен ключ');
- *    $serverInfo = $API->serverGet('IP адрес сервера');
+ *    $serverInfo = $API->method('server.get', array('IP адрес сервера'));
  *
  *    if (count($serverInfo['result']) && is_array($serverInfo['result'])) {
  *      echo $serverInfo['result'][0]['name'];
