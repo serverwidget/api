@@ -159,13 +159,14 @@ a.logo {
     <div id="server_wrapper"><div class="empty_table">Идёт загрузка данных...</div></div>
 
 <script>
-var address = '78.107.35.5:27015', server_wrapper = document.getElementById('server_wrapper');
+var address = '37.187.205.242:7777', server_wrapper = document.getElementById('server_wrapper');
 
 function htmlspecialchars(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
 SERVERWIDGET.Api.call('server.get', {
+  lang: 'ru',
   address: address,
   fields: 'players,map,game,geo,update,extra,uptime,rank,ping'
 }, function(response) {
@@ -205,7 +206,7 @@ SERVERWIDGET.Api.call('server.get', {
       </div>\
       <div class="row">\
         <b>ОС сервера:</b>\
-        <span>' + (server['extra']['os'] == 'l' ? 'Linux' : (server['extra']['os'] == 'w' ? 'Windows' : 'Mac')) + '</span>\
+        <span>' + (server['extra']['os'] == '-' ? '-' : (server['extra']['os'] == 'l' ? 'Linux' : (server['extra']['os'] == 'w' ? 'Windows' : 'Mac'))) + '</span>\
       </div>\
       <div class="row">\
         <b>Требуется пароль:</b>\
@@ -213,15 +214,11 @@ SERVERWIDGET.Api.call('server.get', {
       </div>\
       <div class="row">\
         <b>Тип:</b>\
-        <span>' + (server['extra']['dedicated'] == 'd' ? 'Выделенный' : 'Виртуальный') + '</span>\
+        <span>' + (server['extra']['dedicated'] == '-' ? '-' : (server['extra']['dedicated'] == 'd' ? 'Выделенный' : 'Виртуальный')) + '</span>\
       </div>\
       <div class="row">\
         <b>Расположение:</b>\
         <span>' + server['geo']['country']['name'] + '</span>\
-      </div>\
-      <div class="row">\
-        <b>Ранк:</b>\
-        <span>' + server['rank'] + '</span>\
       </div>\
       <div class="row">\
         <b>Пинг:</b>\
